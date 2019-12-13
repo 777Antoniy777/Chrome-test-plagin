@@ -38,16 +38,30 @@ gulp.task("css", function () {
 });
 
 // js
-gulp.task("js", function () {
+gulp.task("backgroundJs", function () {
   return gulp.src("source/js/**/*.js")
     .pipe(sourcemaps.init())
-    .pipe(jsconcat("all.js"))
+    .pipe(jsconcat("background.js"))
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
     .pipe(gulp.dest("build/js"))
     .pipe(jsuglify())
-    .pipe(rename("all.min.js"))
+    .pipe(rename("background.min.js"))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest("build/js"))
+    .pipe(server.stream());
+});
+
+gulp.task("contentJs", function () {
+  return gulp.src("source/content.js")
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
+    .pipe(gulp.dest("build/js"))
+    .pipe(jsuglify())
+    .pipe(rename("content.min.js"))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest("build/js"))
     .pipe(server.stream());
@@ -115,6 +129,7 @@ gulp.task("server", function() {
   gulp.watch("source/js/*/**.js", gulp.series("js"));
   gulp.watch("source/*.html", gulp.series("html", "reload"));
   gulp.watch("source/manifest.json", gulp.series("copy")).on("change", server.reload);
+  gulp.watch("source/content.js", gulp.series("js")).on("change", server.reload);
 });
 
 gulp.task("reload", function(done) {
@@ -127,22 +142,13 @@ gulp.task("copy", function() {
     "source/fonts/**/*.{woff,woff2}",
     "source/img/**/*.{png,jpg,webp}",
     "source/img/svg/*.svg",
-    "source/background.js",
+    // "source/content.js",
     "source/manifest.json"
   ], {
     base: "source"
   })
   .pipe(gulp.dest("build"));
 });
-
-// gulp.task("copym", function() {
-//   return gulp.src([
-//     "Chrome-test-plagin/manifest.json"
-//   ], {
-//     base: "Chrome-test-plagin"
-//   })
-//   .pipe(gulp.dest("build"));
-// });
 
 gulp.task("clean", function() {
   return del("build");
@@ -153,10 +159,11 @@ gulp.task("imagemin", gulp.series(
   "images"
 ));
 
-// gulp.task("copyall", gulp.series(
-//   "copy",
-//   "copym"
-// ));
+gulp.task("js", gulp.series(
+  "backgroundJs",
+  "contentJs"
+));
+
 
 gulp.task("build", gulp.series(
   "clean",

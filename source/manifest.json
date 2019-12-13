@@ -3,24 +3,26 @@
 	"name": "Test Chrome Extension",
 	"description": "Test Chrome Extension",
   "version": "1.0.0",
-	"browser_action": {
-		"default_icon": "img/icon.png",
-		"default_popup": "index.html"
-  },
-  "content_scripts": [
-    {
-      "matches":["https://---------------/*"],
-      "js":["js/all.js"],
-      "run_at":"document_idle"
-    }
-  ],
-	"permissions": [
+  "permissions": [
     "activeTab",
+    "tabs",
     "cookies",
     "http://*/*",
     "https://*/*"
   ],
+  "content_scripts": [{
+      "matches": ["https://*.hh.ru/resume/*"],
+      "js": ["js/content.js"],
+      "run_at": "document_idle"
+  }],
   "background": {
-    "scripts": ["background.js"]
-  }
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "web_accessible_resources": [],
+  "browser_action": {
+		"default_icon": "img/icon.png",
+		"default_popup": "popup.html"
+  },
+  "icons": {}
 }
