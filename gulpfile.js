@@ -39,9 +39,8 @@ gulp.task("css", function () {
 
 // js
 gulp.task("backgroundJs", function () {
-  return gulp.src("source/js/**/*.js")
+  return gulp.src("source/js/background.js")
     .pipe(sourcemaps.init())
-    .pipe(jsconcat("background.js"))
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
@@ -54,7 +53,7 @@ gulp.task("backgroundJs", function () {
 });
 
 gulp.task("contentJs", function () {
-  return gulp.src("source/content.js")
+  return gulp.src("source/js/content.js")
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
@@ -126,10 +125,9 @@ gulp.task("server", function() {
   gulp.watch("source/img/**/*.{png,jpg,webp}", gulp.series("copy")).on("change", server.reload);
   gulp.watch("source/img/icons-sprite/*.svg", gulp.series("sprite", "reload"));
   gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css"));
-  gulp.watch("source/js/*/**.js", gulp.series("js"));
+  gulp.watch("source/js/**/*.js", gulp.series("js"));
   gulp.watch("source/*.html", gulp.series("html", "reload"));
   gulp.watch("source/manifest.json", gulp.series("copy")).on("change", server.reload);
-  gulp.watch("source/content.js", gulp.series("js")).on("change", server.reload);
 });
 
 gulp.task("reload", function(done) {
@@ -142,7 +140,6 @@ gulp.task("copy", function() {
     "source/fonts/**/*.{woff,woff2}",
     "source/img/**/*.{png,jpg,webp}",
     "source/img/svg/*.svg",
-    // "source/content.js",
     "source/manifest.json"
   ], {
     base: "source"
