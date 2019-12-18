@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>A2 Extension options</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="Description" content="A2 Extension options">
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="fonts/SourceSansPro-Regular.woff2" as="font" rel="preload" crossorigin="anonymous">
+    <link href="fonts/SourceSansPro-SemiBold.woff2" as="font" rel="preload" crossorigin="anonymous">
+
+  </head>
+  <body class="options-page">
+
+    <!-- Main -->
+    <main class="options-main main text-content">
+      <div class="site-wrapper">
+        <h1 class="main__title">A2 Extension options</h1>
+
+        <form class="main__form" action="#" method="POST">
+          <div class="main__form-wrapper">
+            <div class="main__field-wrapper">
+
+              <input id="token" type="text" name="token" aria-label="Сгенерировать ваш токен" placeholder="Здесь появится ваш токен" required readonly>
+
+              <div class="main__field-error hidden">
+                <p>Сообщение об ошибке</p>
+              </div>
+
+            </div>
+            <button class="main__button main__button--token" type="button">Сгенерировать токен</button>
+          </div>
+
+
+          <button class="main__button main__button--submit" type="submit">Зарегистрироваться</button>
+        </form>
+
+      </div>
+    </main>
+
+    <script src="js/options.js"></script>
+  </body>
+</html>

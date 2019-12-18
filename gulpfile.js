@@ -66,6 +66,20 @@ gulp.task("contentJs", function () {
     .pipe(server.stream());
 });
 
+gulp.task("optionsJs", function () {
+  return gulp.src("source/js/options.js")
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
+    .pipe(gulp.dest("build/js"))
+    .pipe(jsuglify())
+    .pipe(rename("options.min.js"))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest("build/js"))
+    .pipe(server.stream());
+});
+
 // img (jpg, png, svg, webp)
 gulp.task("images", function() {
   return gulp.src("source/img/*.{png,jpg,svg}")
@@ -158,7 +172,8 @@ gulp.task("imagemin", gulp.series(
 
 gulp.task("js", gulp.series(
   "backgroundJs",
-  "contentJs"
+  "contentJs",
+  "optionsJs"
 ));
 
 

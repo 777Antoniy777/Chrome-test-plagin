@@ -1,5 +1,4 @@
 html {
-  width: 320px;
   box-sizing: border-box;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -21,6 +20,11 @@ body {
   color: $b;
   background-color: lightskyblue;
   overflow-x: hidden;
+}
+
+.options-page {
+  width: 100%;
+  background-color: $w;
 }
 
 .site-wrapper {
@@ -54,4 +58,10 @@ img {
     display: block;
     font-size: 12px;
   }
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity, transform 0.3s;
 }

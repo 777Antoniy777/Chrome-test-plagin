@@ -4,53 +4,73 @@ const tel = informationBlock.querySelector('span').textContent;
 const email = informationBlock.nextElementSibling.querySelector('span').textContent;
 const userInformationBlock = document.querySelector('.resume-applicant .bloko-columns-row:nth-child(1) .bloko-column');
 
-const dataObj = {
-  fullname: fullname,
-  tel: tel,
-  email: email
-};
-
 const extensionBtn = document.createElement('button');
 extensionBtn.textContent = 'Импортировать данные';
 extensionBtn.classList.add('extension-button');
 
-extensionBtn.style.margin = '20px';
-extensionBtn.style.width = '200px';
-extensionBtn.style.height = '40px';
-extensionBtn.style.textAlign = 'center';
-extensionBtn.style.backgroundColor = 'lightgrey';
-extensionBtn.style.border = '2px solid gold';
-extensionBtn.style.borderRadius = '5px';
+// const dataObj = {
+//   fullname: fullname,
+//   tel: tel,
+//   email: email
+// };
+
+const css = `
+.extension-button { 
+  margin: 20px 0; 
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  background-color: lightgray;
+  border: 2px solid gold;
+  border-radius: 5px;
+}
+.extension-button:hover {
+  background-color: #e8e0e0;
+}
+.extension-button:active {
+  background-color: #f1ebeb;
+}`;
+
+const style = document.createElement('style');
+style.type = 'text/css';
+
+if (style.styleSheet) {
+  style.styleSheet.cssText = css;
+} else {
+  style.appendChild(document.createTextNode(css));
+}
+
+document.getElementsByTagName('head')[0].appendChild(style);
 
 window.addEventListener('load', () => {
   document.body.classList.add('loaded');
-  console.log('DOM fully loaded and parsed');
   userInformationBlock.append(extensionBtn);
 });
 
+// const dataJson = JSON.stringify(dataObj);
 const data = new FormData();
 
 if (data) {
-  const dataJson = JSON.stringify(dataObj);
-  // data.append('json', dataJson);
   data.append('fullname', fullname);
+  data.append('tel', tel);
+  data.append('email', email);
 }
-console.log(data.get('fullname'), data);
 
 fetch('https://a2design.biz/', {
   method: 'POST',
+  // headers: {
+  //   'Content-Type': 'application/json;charset=utf-8'
+  // },
   body: data,
+  // body: dataJson,
 });
 // .then(function(response) {
-//   // Стоит проверить код ответа.
 //   if (!response.ok) {
-//     // Сервер вернул код ответа за границами диапазона [200, 299]
 //     return Promise.reject(new Error(
 //       'Response failed: ' + response.status + ' (' + response.statusText + ')',
 //     ));
 //   }
 
-//   // Далее будем использовать только JSON из тела ответа.
 //   // console.log(response);
 //   // console.log(response.json());
 //   // return response.json();
